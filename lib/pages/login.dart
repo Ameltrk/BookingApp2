@@ -1,6 +1,8 @@
 // ignore_for_file: use_build_context_synchronously
 
+// ignore: unused_import
 import 'package:booking_app/pages/bottomnav.dart';
+import 'package:booking_app/pages/home.dart';
 import 'package:booking_app/pages/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +42,9 @@ class _LoginState extends State<Login> {
 
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const Bottomnav()),
+          // MaterialPageRoute(builder: (context) => const Bottomnav()),
+           MaterialPageRoute(builder: (context) => const Home()),
+
         );
       } on FirebaseAuthException catch (e) {
         setState(() => isLoading = false);
