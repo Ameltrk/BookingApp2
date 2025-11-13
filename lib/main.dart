@@ -94,9 +94,9 @@
 // }
 
 
-
 // ignore_for_file: deprecated_member_use, unused_import
-
+ 
+ 
 import 'package:booking_app/bookingowner/place_detail.dart';
 import 'package:booking_app/pages/bottomnav.dart';
 import 'package:booking_app/pages/detail_page.dart';
@@ -104,9 +104,11 @@ import 'package:booking_app/pages/login.dart';
 import 'package:booking_app/pages/signup.dart';
 import 'package:booking_app/pages/verification.dart';
 import 'package:booking_app/pages/landing_page.dart';
-import 'package:booking_app/pages/home.dart'; // 👈 Added import
+import 'package:booking_app/pages/home.dart'; 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -173,10 +175,11 @@ class MyApp extends StatelessWidget {
       ),
 
       // // 👇 Start the app at HomePage
-      home: const Home(),
+      //  home: const Home(),
+          home: VerificationPage(onComplete: () {  },)
       //  home: const LandingPage(),    
-      //  home: const DetailPage(), hadi li fiha detail t3 chaque house
-    //  home: const PlaceDetail()// hadi bsh yajouti owner placa
+     //  home: const DetailPage(), hadi li fiha detail t3 chaque house
+     //  home: const PlaceDetail()// hadi bsh yajouti owner placa
     );
   }
 }
