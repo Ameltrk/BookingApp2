@@ -399,68 +399,138 @@ class _HomePageState extends State<Home> {
                     return const Center(child: Text("Aucune propriété disponible."));
                   }
 
-                  return Column(
-                    children: docs.map((doc) {
-                      final data = doc.data() as Map<String, dynamic>;
-                      return Card(
-                        margin: const EdgeInsets.only(bottom: 16),
-                        clipBehavior: Clip.hardEdge,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
+                  // return Column(
+                  //   children: docs.map((doc) {
+                  //     final data = doc.data() as Map<String, dynamic>;
+                  //     return Card(
+                  //       margin: const EdgeInsets.only(bottom: 16),
+                  //       clipBehavior: Clip.hardEdge,
+                  //       shape: RoundedRectangleBorder(
+                  //         borderRadius: BorderRadius.circular(16),
+                  //       ),
+                  //       child: Column(
+                  //         crossAxisAlignment: CrossAxisAlignment.start,
+                  //         children: [
+                  //           data["Image"] != null &&
+                  //                   data["Image"] != ""
+                  //               ? Image.network(
+                  //                   data["Image"],
+                  //                   height: 180,
+                  //                   width: double.infinity,
+                  //                   fit: BoxFit.cover,
+                  //                 )
+                  //               : Container(
+                  //                   height: 180,
+                  //                   color: Colors.grey[300],
+                  //                   child: const Center(
+                  //                       child: Icon(Icons.image, size: 50)),
+                  //                 ),
+                  //           Padding(
+                  //             padding: const EdgeInsets.all(12),
+                  //             child: Column(
+                  //               crossAxisAlignment: CrossAxisAlignment.start,
+                  //               children: [
+                  //                 Text(data["PlaceName"] ?? "",
+                  //                     style: const TextStyle(
+                  //                         fontWeight: FontWeight.bold,
+                  //                         fontSize: 16)),
+                  //                 const SizedBox(height: 5),
+                  //                 Row(
+                  //                   children: [
+                  //                     const Icon(Icons.location_on_outlined,
+                  //                         size: 16, color: Colors.grey),
+                  //                     const SizedBox(width: 4),
+                  //                     Text(data["PlaceAddress"] ?? "",
+                  //                         style: const TextStyle(
+                  //                             color: Colors.grey,
+                  //                             fontSize: 13)),
+                  //                   ],
+                  //                 ),
+                  //                 const SizedBox(height: 8),
+                  //                 Text(
+                  //                   "${data["PlaceCharges"] ?? "-"} DA / nuit",
+                  //                   style: const TextStyle(
+                  //                       color: Color(0xFF1E3C72),
+                  //                       fontWeight: FontWeight.bold),
+                  //                 ),
+                  //               ],
+                  //             ),
+                  //           )
+                  //         ],
+                  //       ),
+                  //     );
+                  //   }).toList(),
+                  // );
+                  return SizedBox(
+  height: 260, // enough to show card + padding
+  child: ListView(
+    scrollDirection: Axis.horizontal,
+    children: docs.map((doc) {
+      final data = doc.data() as Map<String, dynamic>;
+      return Container(
+        width: 200, // card width
+        margin: const EdgeInsets.only(right: 16),
+        child: Card(
+          clipBehavior: Clip.hardEdge,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              data["Image"] != null && data["Image"] != ""
+                  ? Image.network(
+                      data["Image"],
+                      height: 120,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    )
+                  : Container(
+                      height: 120,
+                      color: Colors.grey[300],
+                      child: const Center(
+                          child: Icon(Icons.image, size: 50)),
+                    ),
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(data["PlaceName"] ?? "",
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 14)),
+                    const SizedBox(height: 4),
+                    Row(
+                      children: [
+                        const Icon(Icons.location_on_outlined,
+                            size: 14, color: Colors.grey),
+                        const SizedBox(width: 4),
+                        Expanded(
+                          child: Text(data["PlaceAddress"] ?? "",
+                              style: const TextStyle(
+                                  color: Colors.grey, fontSize: 12),
+                              overflow: TextOverflow.ellipsis),
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            data["Image"] != null &&
-                                    data["Image"] != ""
-                                ? Image.network(
-                                    data["Image"],
-                                    height: 180,
-                                    width: double.infinity,
-                                    fit: BoxFit.cover,
-                                  )
-                                : Container(
-                                    height: 180,
-                                    color: Colors.grey[300],
-                                    child: const Center(
-                                        child: Icon(Icons.image, size: 50)),
-                                  ),
-                            Padding(
-                              padding: const EdgeInsets.all(12),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(data["PlaceName"] ?? "",
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16)),
-                                  const SizedBox(height: 5),
-                                  Row(
-                                    children: [
-                                      const Icon(Icons.location_on_outlined,
-                                          size: 16, color: Colors.grey),
-                                      const SizedBox(width: 4),
-                                      Text(data["PlaceAddress"] ?? "",
-                                          style: const TextStyle(
-                                              color: Colors.grey,
-                                              fontSize: 13)),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    "${data["PlaceCharges"] ?? "-"} DA / nuit",
-                                    style: const TextStyle(
-                                        color: Color(0xFF1E3C72),
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      );
-                    }).toList(),
-                  );
+                      ],
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      "${data["PlaceCharges"] ?? "-"} DA / nuit",
+                      style: const TextStyle(
+                          color: Color(0xFF1E3C72),
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      );
+    }).toList(),
+  ),
+);
+
                 },
               ),
             ],
