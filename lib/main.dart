@@ -174,12 +174,12 @@ class MyApp extends StatelessWidget {
         ),
       ),
 
-      // // 👇 Start the app at HomePage
-      //  home: const Home(),
-          home: VerificationPage(onComplete: () {  },)
+      // apres nrj3o landing khlona nkmlo bhadi elajal testin brk
+       home: const Home(),
+          // home: VerificationPage(onComplete: () {  },)
       //  home: const LandingPage(),    
      //  home: const DetailPage(), hadi li fiha detail t3 chaque house
-     //  home: const PlaceDetail()// hadi bsh yajouti owner placa
+      // home: const PlaceDetail()// hadi bsh yajouti owner placa
     );
   }
 }
