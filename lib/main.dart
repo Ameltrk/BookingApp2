@@ -181,8 +181,10 @@ class MyApp extends StatelessWidget {
       ),
 
       // apres nrj3o landing khlona nkmlo bhadi elajal testin brk
-      home: const Bottomnav(),
-      // home: const Home(),
+
+
+      // home: const Bottomnav(),
+      home: const Home(),
       //home: const BookingPage(),
       // home: VerificationPage(onComplete: () {  },)
       //home: const LandingPage(),
