@@ -15,9 +15,9 @@ class Bottomnav extends StatefulWidget {
 class _BottomnavState extends State<Bottomnav> {
   late List<Widget> pages;
   late Home homePage;
-  late Booking booking;
-  late Profile profile;
-  late Wallet wallet; 
+  late BookingPage bookingPage;
+  late ProfilePage profilePage;
+  late Wallet wallet;
 
   int currentTabIndex = 0;
 
@@ -25,11 +25,11 @@ class _BottomnavState extends State<Bottomnav> {
   void initState() {
     super.initState();
     homePage = Home();
-    booking = Booking();
-    profile = Profile();
+    bookingPage = const BookingPage();
+    profilePage = const ProfilePage();
     wallet = Wallet();
 
-    pages = [homePage, booking, wallet, profile];
+    pages = [homePage, bookingPage, wallet, profilePage];
   }
 
   @override
