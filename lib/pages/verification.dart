@@ -1,13 +1,12 @@
+
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
+import 'package:booking_app/pages/bottomnav.dart'; // Import your Home page
 
 enum VerificationStep { intro, document, selfie, processing, success }
 
 class VerificationPage extends StatefulWidget {
-  final VoidCallback onComplete;
-  final VoidCallback? onSkip;
-
-  const VerificationPage({super.key, required this.onComplete, this.onSkip});
+  const VerificationPage({super.key, required Null Function() onComplete});
 
   @override
   State<VerificationPage> createState() => _VerificationPageState();
@@ -50,6 +49,14 @@ class _VerificationPageState extends State<VerificationPage> {
     });
   }
 
+  void goToHome() {
+    // Navigate to Home page after success
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const Bottomnav()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget content;
@@ -83,40 +90,49 @@ class _VerificationPageState extends State<VerificationPage> {
     );
   }
 
-  Widget _buildHeader() {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(16, 60, 16, 20),
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Color(0xFF1E3A8A), Color(0xFF1E40AF)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+ Widget _buildHeader() {
+  return Container(
+    padding: const EdgeInsets.fromLTRB(16, 60, 16, 20),
+    decoration: const BoxDecoration(
+      gradient: LinearGradient(
+        colors: [Color(0xFF1E3A8A), Color(0xFF1E40AF)],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      ),
+      borderRadius: BorderRadius.vertical(bottom: Radius.circular(32)),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text("Vérification",
+                style: TextStyle(color: Colors.white, fontSize: 18)),
+            TextButton(
+              onPressed: () {
+                // Skip verification and go directly to Home
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Bottomnav()),
+                );
+              },
+              child: const Text("Skip", style: TextStyle(color: Colors.white70)),
+            ),
+          ],
         ),
-        borderRadius: BorderRadius.vertical(bottom: Radius.circular(32)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text("Vérification",
-                  style: TextStyle(color: Colors.white, fontSize: 18)),
-              Text("${(progress * 100).round()}%",
-                  style: const TextStyle(color: Colors.white70)),
-            ],
-          ),
-          const SizedBox(height: 12),
-          LinearProgressIndicator(
-            value: progress,
-            backgroundColor: Colors.blue[800],
-            color: Colors.white,
-            minHeight: 6,
-          ),
-        ],
-      ),
-    );
-  }
+        const SizedBox(height: 12),
+        LinearProgressIndicator(
+          value: progress,
+          backgroundColor: Colors.blue[800],
+          color: Colors.white,
+          minHeight: 6,
+        ),
+      ],
+    ),
+  );
+}
+
 
   Widget _buildIntro() {
     return Padding(
@@ -163,12 +179,6 @@ class _VerificationPageState extends State<VerificationPage> {
                 setState(() => currentStep = VerificationStep.document),
             child: const Text("Commencer la vérification"),
           ),
-          if (widget.onSkip != null)
-            TextButton(
-              onPressed: widget.onSkip,
-              child: const Text("Plus tard",
-                  style: TextStyle(color: Colors.grey)),
-            ),
         ],
       ),
     );
@@ -312,13 +322,6 @@ class _VerificationPageState extends State<VerificationPage> {
                                 child: const Icon(LucideIcons.camera,
                                     color: Colors.blue, size: 48),
                               ),
-                              const Positioned(
-                                child: Opacity(
-                                  opacity: 0.2,
-                                  child: Icon(LucideIcons.scan,
-                                      size: 96, color: Colors.blue),
-                                ),
-                              ),
                             ],
                           ),
                           const SizedBox(height: 20),
@@ -397,7 +400,7 @@ class _VerificationPageState extends State<VerificationPage> {
               backgroundColor: const Color(0xFF1E3A8A),
               minimumSize: const Size(double.infinity, 48),
             ),
-            onPressed: widget.onComplete,
+            onPressed: goToHome, // Directly navigate to Home
             icon: const Icon(LucideIcons.shield),
             label: const Text("Continuer"),
           ),

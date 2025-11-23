@@ -186,8 +186,8 @@ class MyApp extends StatelessWidget {
       // home: const Bottomnav(),
       // home: const Home(),
       //home: const BookingPage(),
-      home: VerificationPage(onComplete: () {  },)
-      // home: const LandingPage(),
+      // home: VerificationPage(onComplete: () {  },)
+      home: const LandingPage(),
       //  home: const DetailPage(), hadi li fiha detail t3 chaque house
       // home: const PlaceDetail()// hadi bsh yajouti owner placa
       // home: const ProfilePage(),

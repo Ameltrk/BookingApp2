@@ -4,6 +4,7 @@
 import 'package:booking_app/pages/bottomnav.dart';
 import 'package:booking_app/pages/home.dart';
 import 'package:booking_app/pages/login.dart';
+import 'package:booking_app/pages/verification.dart';
 import 'package:booking_app/services/database.dart';
 import 'package:booking_app/services/shared_perference.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -81,8 +82,7 @@ class _SignupState extends State<Signup> {
 
       Navigator.pushReplacement(
         context,
-        // MaterialPageRoute(builder: (context) => const Bottomnav()),
-         MaterialPageRoute(builder: (context) => const Home()),
+         MaterialPageRoute(builder: (context) => VerificationPage(onComplete: () {  },)),
 
       );
     } on FirebaseAuthException catch (e) {
