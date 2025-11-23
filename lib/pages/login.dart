@@ -2,6 +2,7 @@
 
 // ignore: unused_import
 import 'package:booking_app/pages/bottomnav.dart';
+// ignore: unused_import
 import 'package:booking_app/pages/home.dart';
 import 'package:booking_app/pages/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';

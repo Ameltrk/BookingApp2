@@ -175,11 +175,10 @@ class MyApp extends StatelessWidget {
       ),
 
       // apres nrj3o landing khlona nkmlo bhadi elajal testin brk
-       home: const Home(),
+      //  home: const Home(),
           // home: VerificationPage(onComplete: () {  },)
-      //  home: const LandingPage(),    
-      // home: const DetailPage(placeData: {},), //hadi li fiha detail t3 chaque house
-
+        // home: const DetailPage(placeData: {},), //hadi li fiha detail t3 chaque house
+       home : LandingPage()
       // home: Bottomnav(),
       // home: Signup()
       // home: const PlaceDetail()// hadi bsh yajouti owner placa
