@@ -486,7 +486,7 @@ class _VerificationPageState extends State<VerificationPage> {
 
     var request = http.MultipartRequest(
       'POST',
-      Uri.parse('http://YOUR_BACKEND_IP:5000/verify'), // <-- Change to your backend IP
+      Uri.parse('http://10.0.2.2:5000/verify')
     );
 
     request.files.add(await http.MultipartFile.fromPath('document', documentPath!));
