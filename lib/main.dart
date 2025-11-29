@@ -95,8 +95,8 @@ class MyApp extends StatelessWidget {
       // home: const Bottomnav(),
       // home: const Home(),
       //home: const BookingPage(),
-      // home: VerificationPage(onComplete: () {  },)
-      home:  LandingPage(),
+      home: VerificationPage(onComplete: () {  },)
+      // home:  LandingPage(),
       // home: Wallet()
       // home: RoleSelectionPage()
       //  home: const DetailPage(), hadi li fiha detail t3 chaque house

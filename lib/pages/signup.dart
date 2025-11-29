@@ -64,7 +64,6 @@ class _SignupState extends State<Signup> {
     return null; // Le mot de passe est valide
   }
   // ----------------------------------------------
-
   // --- Inscription Firebase ---
   Future<void> registration() async {
     // Vérifie la validité du formulaire (y compris le mot de passe)

@@ -1,9 +1,425 @@
 
-import 'package:booking_app/pages/roles.dart';
+// import 'package:booking_app/pages/roles.dart';
+// import 'package:flutter/material.dart';
+// import 'package:lucide_icons/lucide_icons.dart';
+// // ignore: unused_import
+// import 'package:booking_app/pages/bottomnav.dart'; // Import your Home page
+
+// enum VerificationStep { intro, document, selfie, processing, success }
+
+// class VerificationPage extends StatefulWidget {
+//   const VerificationPage({super.key, required Null Function() onComplete});
+
+//   @override
+//   State<VerificationPage> createState() => _VerificationPageState();
+// }
+
+// class _VerificationPageState extends State<VerificationPage> {
+//   VerificationStep currentStep = VerificationStep.intro;
+//   bool documentUploaded = false;
+//   bool selfieUploaded = false;
+
+//   double get progress {
+//     switch (currentStep) {
+//       case VerificationStep.intro:
+//         return 0;
+//       case VerificationStep.document:
+//         return 0.25;
+//       case VerificationStep.selfie:
+//         return 0.5;
+//       case VerificationStep.processing:
+//         return 0.75;
+//       case VerificationStep.success:
+//         return 1.0;
+//     }
+//   }
+
+//   void handleDocumentUpload() {
+//     setState(() => documentUploaded = true);
+//     Future.delayed(const Duration(seconds: 1), () {
+//       setState(() => currentStep = VerificationStep.selfie);
+//     });
+//   }
+
+//   void handleSelfieUpload() {
+//     setState(() {
+//       selfieUploaded = true;
+//       currentStep = VerificationStep.processing;
+//     });
+//     Future.delayed(const Duration(seconds: 3), () {
+//       setState(() => currentStep = VerificationStep.success);
+//     });
+//   }
+
+//  void goToHome() {
+//   Navigator.pushReplacement(
+//     context,
+//     MaterialPageRoute(builder: (context) => const RoleSelectionPage()),
+//   );
+// }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     Widget content;
+
+//     switch (currentStep) {
+//       case VerificationStep.intro:
+//         content = _buildIntro();
+//         break;
+//       case VerificationStep.document:
+//         content = _buildDocumentStep();
+//         break;
+//       case VerificationStep.selfie:
+//         content = _buildSelfieStep();
+//         break;
+//       case VerificationStep.processing:
+//         content = _buildProcessing();
+//         break;
+//       case VerificationStep.success:
+//         content = _buildSuccess();
+//         break;
+//     }
+
+//     return Scaffold(
+//       backgroundColor: Colors.grey[50],
+//       body: Column(
+//         children: [
+//           _buildHeader(),
+//           Expanded(child: SingleChildScrollView(child: content)),
+//         ],
+//       ),
+//     );
+//   }
+
+//  Widget _buildHeader() {
+//   return Container(
+//     padding: const EdgeInsets.fromLTRB(16, 60, 16, 20),
+//     decoration: const BoxDecoration(
+//       gradient: LinearGradient(
+//         colors: [Color(0xFF1E3A8A), Color(0xFF1E40AF)],
+//         begin: Alignment.topLeft,
+//         end: Alignment.bottomRight,
+//       ),
+//       borderRadius: BorderRadius.vertical(bottom: Radius.circular(32)),
+//     ),
+//     child: Column(
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         Row(
+//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//           children: [
+//             const Text("Vérification",
+//                 style: TextStyle(color: Colors.white, fontSize: 18)),
+//             TextButton(
+//               onPressed: () {
+//                 // Skip verification and go directly to Home
+//                 Navigator.pushReplacement(
+//                   context,
+//                   MaterialPageRoute(builder: (context) => const RoleSelectionPage()),
+//                 );
+//               },
+//               child: const Text("Skip", style: TextStyle(color: Colors.white70)),
+//             ),
+//           ],
+//         ),
+//         const SizedBox(height: 12),
+//         LinearProgressIndicator(
+//           value: progress,
+//           backgroundColor: Colors.blue[800],
+//           color: Colors.white,
+//           minHeight: 6,
+//         ),
+//       ],
+//     ),
+//   );
+// }
+
+
+//   Widget _buildIntro() {
+//     return Padding(
+//       padding: const EdgeInsets.all(24),
+//       child: Column(
+//         children: [
+//           CircleAvatar(
+//             radius: 50,
+//             backgroundColor: Colors.blue[100],
+//             child: const Icon(LucideIcons.shield, color: Colors.blue, size: 40),
+//           ),
+//           const SizedBox(height: 20),
+//           const Text("Vérification d'identité",
+//               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
+//           const SizedBox(height: 8),
+//           const Text(
+//             "Pour garantir la sécurité de notre communauté, nous utilisons une vérification par IA. Le processus est rapide et sécurisé.",
+//             textAlign: TextAlign.center,
+//             style: TextStyle(color: Colors.grey),
+//           ),
+//           const SizedBox(height: 24),
+//           _buildIntroFeature(
+//             LucideIcons.camera,
+//             "Photo de votre pièce d'identité",
+//             "Carte d'identité nationale ou passeport",
+//           ),
+//           _buildIntroFeature(
+//             LucideIcons.scan,
+//             "Selfie de vérification",
+//             "Notre IA analyse votre photo en temps réel",
+//           ),
+//           _buildIntroFeature(
+//             LucideIcons.shield,
+//             "100% sécurisé et confidentiel",
+//             "Vos données sont cryptées et protégées",
+//           ),
+//           const SizedBox(height: 24),
+//           ElevatedButton(
+//             style: ElevatedButton.styleFrom(
+//               backgroundColor: const Color(0xFF1E3A8A),
+//               minimumSize: const Size(double.infinity, 48),
+//             ),
+//             onPressed: () =>
+//                 setState(() => currentStep = VerificationStep.document),
+//             child: const Text("Commencer la vérification"),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+
+//   Widget _buildIntroFeature(IconData icon, String title, String desc) {
+//     return Padding(
+//       padding: const EdgeInsets.symmetric(vertical: 8),
+//       child: Row(
+//         children: [
+//           CircleAvatar(
+//             radius: 24,
+//             backgroundColor: Colors.blue[50],
+//             child: Icon(icon, color: Colors.blue, size: 20),
+//           ),
+//           const SizedBox(width: 12),
+//           Expanded(
+//             child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: [
+//                 Text(title,
+//                     style: const TextStyle(fontWeight: FontWeight.w600)),
+//                 Text(desc,
+//                     style: const TextStyle(fontSize: 13, color: Colors.grey)),
+//               ],
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+
+//   Widget _buildDocumentStep() {
+//     return Padding(
+//       padding: const EdgeInsets.all(24),
+//       child: Column(
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           const Text("Document d'identité",
+//               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
+//           const SizedBox(height: 4),
+//           const Text("Prenez une photo claire de votre carte d'identité ou passeport.",
+//               style: TextStyle(color: Colors.grey)),
+//           const SizedBox(height: 24),
+//           Card(
+//             shape: RoundedRectangleBorder(
+//                 borderRadius: BorderRadius.circular(16),
+//                 side: const BorderSide(color: Colors.grey, width: 1.5)),
+//             color: Colors.grey[100],
+//             child: Padding(
+//               padding: const EdgeInsets.all(24),
+//               child: Center(
+//                 child: !documentUploaded
+//                     ? Column(
+//                         children: [
+//                           CircleAvatar(
+//                             radius: 40,
+//                             backgroundColor: Colors.blue[100],
+//                             child: const Icon(LucideIcons.upload,
+//                                 color: Colors.blue, size: 32),
+//                           ),
+//                           const SizedBox(height: 16),
+//                           const Text("Télécharger votre document"),
+//                           const SizedBox(height: 8),
+//                           const Text("Formats acceptés : JPG, PNG, PDF",
+//                               style:
+//                                   TextStyle(fontSize: 12, color: Colors.grey)),
+//                           const SizedBox(height: 16),
+//                           ElevatedButton.icon(
+//                             style: ElevatedButton.styleFrom(
+//                                 backgroundColor: const Color(0xFF1E3A8A),
+//                                 minimumSize: const Size(double.infinity, 44)),
+//                             onPressed: handleDocumentUpload,
+//                             icon: const Icon(LucideIcons.camera, size: 18),
+//                             label: const Text("Prendre une photo"),
+//                           ),
+//                           const SizedBox(height: 8),
+//                           OutlinedButton.icon(
+//                             onPressed: handleDocumentUpload,
+//                             icon: const Icon(LucideIcons.upload, size: 18),
+//                             label: const Text("Choisir un fichier"),
+//                           ),
+//                         ],
+//                       )
+//                     : Column(
+//                         children: const [
+//                           Icon(LucideIcons.checkCircle,
+//                               color: Colors.green, size: 64),
+//                           SizedBox(height: 8),
+//                           Text("Document téléchargé !",
+//                               style: TextStyle(
+//                                   color: Colors.green,
+//                                   fontWeight: FontWeight.w600)),
+//                           Text("Passage à l'étape suivante...",
+//                               style: TextStyle(color: Colors.grey)),
+//                         ],
+//                       ),
+//               ),
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+
+//   Widget _buildSelfieStep() {
+//     return Padding(
+//       padding: const EdgeInsets.all(24),
+//       child: Column(
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           const Text("Photo de vérification",
+//               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
+//           const SizedBox(height: 4),
+//           const Text(
+//             "Prenez un selfie pour vérifier votre identité avec notre IA.",
+//             style: TextStyle(color: Colors.grey),
+//           ),
+//           const SizedBox(height: 24),
+//           Card(
+//             shape:
+//                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+//             color: Colors.blue[50],
+//             child: Padding(
+//               padding: const EdgeInsets.all(24),
+//               child: Center(
+//                 child: !selfieUploaded
+//                     ? Column(
+//                         children: [
+//                           Stack(
+//                             alignment: Alignment.center,
+//                             children: [
+//                               Container(
+//                                 width: 160,
+//                                 height: 160,
+//                                 decoration: BoxDecoration(
+//                                   border: Border.all(
+//                                       color: Colors.blue, width: 3, style: BorderStyle.solid),
+//                                   shape: BoxShape.circle,
+//                                 ),
+//                                 child: const Icon(LucideIcons.camera,
+//                                     color: Colors.blue, size: 48),
+//                               ),
+//                             ],
+//                           ),
+//                           const SizedBox(height: 20),
+//                           ElevatedButton.icon(
+//                             style: ElevatedButton.styleFrom(
+//                                 backgroundColor: const Color(0xFF1E3A8A),
+//                                 minimumSize: const Size(double.infinity, 44)),
+//                             onPressed: handleSelfieUpload,
+//                             icon: const Icon(LucideIcons.camera, size: 18),
+//                             label: const Text("Prendre un selfie"),
+//                           ),
+//                         ],
+//                       )
+//                     : Column(
+//                         children: const [
+//                           Icon(LucideIcons.checkCircle,
+//                               color: Colors.green, size: 64),
+//                           SizedBox(height: 8),
+//                           Text("Photo capturée !",
+//                               style: TextStyle(
+//                                   color: Colors.green,
+//                                   fontWeight: FontWeight.w600)),
+//                           Text("Vérification en cours...",
+//                               style: TextStyle(color: Colors.grey)),
+//                         ],
+//                       ),
+//               ),
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+
+//   Widget _buildProcessing() {
+//     return Padding(
+//       padding: const EdgeInsets.all(24),
+//       child: Column(
+//         children: const [
+//           SizedBox(height: 40),
+//           CircularProgressIndicator(color: Colors.blue),
+//           SizedBox(height: 24),
+//           Text("Vérification en cours...",
+//               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+//           SizedBox(height: 8),
+//           Text("Notre IA analyse vos documents, cela ne prendra que quelques secondes.",
+//               textAlign: TextAlign.center,
+//               style: TextStyle(color: Colors.grey)),
+//         ],
+//       ),
+//     );
+//   }
+
+//   Widget _buildSuccess() {
+//     return Padding(
+//       padding: const EdgeInsets.all(24),
+//       child: Column(
+//         children: [
+//           const CircleAvatar(
+//             radius: 50,
+//             backgroundColor: Color(0xFFD1FAE5),
+//             child: Icon(LucideIcons.checkCircle, color: Colors.green, size: 48),
+//           ),
+//           const SizedBox(height: 16),
+//           const Text("Vérification réussie !",
+//               style: TextStyle(color: Colors.green, fontSize: 20, fontWeight: FontWeight.w600)),
+//           const SizedBox(height: 8),
+//           const Text(
+//             "Votre identité a été vérifiée avec succès. Vous pouvez maintenant profiter de tous les services choufDAR.",
+//             textAlign: TextAlign.center,
+//             style: TextStyle(color: Colors.grey),
+//           ),
+//           const SizedBox(height: 20),
+//           ElevatedButton.icon(
+//             style: ElevatedButton.styleFrom(
+//               backgroundColor: const Color(0xFF1E3A8A),
+//               minimumSize: const Size(double.infinity, 48),
+//             ),
+//             onPressed: goToHome, // Directly navigate to Home
+//             icon: const Icon(LucideIcons.shield),
+//             label: const Text("Continuer"),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+
+
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
-// ignore: unused_import
-import 'package:booking_app/pages/bottomnav.dart'; // Import your Home page
+import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
+import 'dart:io';
+
+import 'roles.dart'; // Your page to navigate after verification
 
 enum VerificationStep { intro, document, selfie, processing, success }
 
@@ -16,8 +432,13 @@ class VerificationPage extends StatefulWidget {
 
 class _VerificationPageState extends State<VerificationPage> {
   VerificationStep currentStep = VerificationStep.intro;
+
   bool documentUploaded = false;
   bool selfieUploaded = false;
+
+  String? documentPath;
+  String? selfiePath;
+  final ImagePicker _picker = ImagePicker();
 
   double get progress {
     switch (currentStep) {
@@ -34,30 +455,63 @@ class _VerificationPageState extends State<VerificationPage> {
     }
   }
 
-  void handleDocumentUpload() {
-    setState(() => documentUploaded = true);
-    Future.delayed(const Duration(seconds: 1), () {
-      setState(() => currentStep = VerificationStep.selfie);
-    });
+  // ------------------------ Document Upload ------------------------
+  Future<void> pickDocument() async {
+    final XFile? file = await _picker.pickImage(source: ImageSource.camera);
+    if (file != null) {
+      setState(() {
+        documentPath = file.path;
+        documentUploaded = true;
+        currentStep = VerificationStep.selfie;
+      });
+    }
   }
 
-  void handleSelfieUpload() {
-    setState(() {
-      selfieUploaded = true;
-      currentStep = VerificationStep.processing;
-    });
-    Future.delayed(const Duration(seconds: 3), () {
+  // ------------------------ Selfie Upload & API Call ------------------------
+  Future<void> takeSelfie() async {
+    final XFile? file = await _picker.pickImage(source: ImageSource.camera);
+    if (file != null) {
+      setState(() {
+        selfiePath = file.path;
+        selfieUploaded = true;
+        currentStep = VerificationStep.processing;
+      });
+
+      await sendToVerificationAPI();
+    }
+  }
+
+  Future<void> sendToVerificationAPI() async {
+    if (documentPath == null || selfiePath == null) return;
+
+    var request = http.MultipartRequest(
+      'POST',
+      Uri.parse('http://YOUR_BACKEND_IP:5000/verify'), // <-- Change to your backend IP
+    );
+
+    request.files.add(await http.MultipartFile.fromPath('document', documentPath!));
+    request.files.add(await http.MultipartFile.fromPath('selfie', selfiePath!));
+
+    var response = await request.send();
+
+    if (response.statusCode == 200) {
       setState(() => currentStep = VerificationStep.success);
-    });
+    } else {
+      setState(() => currentStep = VerificationStep.intro);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Verification failed. Please try again.')),
+      );
+    }
   }
 
- void goToHome() {
-  Navigator.pushReplacement(
-    context,
-    MaterialPageRoute(builder: (context) => const RoleSelectionPage()),
-  );
-}
+  void goToHome() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const RoleSelectionPage()),
+    );
+  }
 
+  // ------------------------ Build UI ------------------------
   @override
   Widget build(BuildContext context) {
     Widget content;
@@ -91,50 +545,45 @@ class _VerificationPageState extends State<VerificationPage> {
     );
   }
 
- Widget _buildHeader() {
-  return Container(
-    padding: const EdgeInsets.fromLTRB(16, 60, 16, 20),
-    decoration: const BoxDecoration(
-      gradient: LinearGradient(
-        colors: [Color(0xFF1E3A8A), Color(0xFF1E40AF)],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
+  // ------------------------ Header ------------------------
+  Widget _buildHeader() {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(16, 60, 16, 20),
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Color(0xFF1E3A8A), Color(0xFF1E40AF)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.vertical(bottom: Radius.circular(32)),
       ),
-      borderRadius: BorderRadius.vertical(bottom: Radius.circular(32)),
-    ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text("Vérification",
-                style: TextStyle(color: Colors.white, fontSize: 18)),
-            TextButton(
-              onPressed: () {
-                // Skip verification and go directly to Home
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const RoleSelectionPage()),
-                );
-              },
-              child: const Text("Skip", style: TextStyle(color: Colors.white70)),
-            ),
-          ],
-        ),
-        const SizedBox(height: 12),
-        LinearProgressIndicator(
-          value: progress,
-          backgroundColor: Colors.blue[800],
-          color: Colors.white,
-          minHeight: 6,
-        ),
-      ],
-    ),
-  );
-}
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text("Vérification",
+                  style: TextStyle(color: Colors.white, fontSize: 18)),
+              TextButton(
+                onPressed: goToHome,
+                child: const Text("Skip", style: TextStyle(color: Colors.white70)),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          LinearProgressIndicator(
+            value: progress,
+            backgroundColor: Colors.blue[800],
+            color: Colors.white,
+            minHeight: 6,
+          ),
+        ],
+      ),
+    );
+  }
 
-
+  // ------------------------ Intro Step ------------------------
   Widget _buildIntro() {
     return Padding(
       padding: const EdgeInsets.all(24),
@@ -156,28 +605,20 @@ class _VerificationPageState extends State<VerificationPage> {
           ),
           const SizedBox(height: 24),
           _buildIntroFeature(
-            LucideIcons.camera,
-            "Photo de votre pièce d'identité",
-            "Carte d'identité nationale ou passeport",
-          ),
+              LucideIcons.camera,
+              "Photo de votre pièce d'identité",
+              "Carte d'identité nationale ou passeport"),
           _buildIntroFeature(
-            LucideIcons.scan,
-            "Selfie de vérification",
-            "Notre IA analyse votre photo en temps réel",
-          ),
+              LucideIcons.scan, "Selfie de vérification", "Notre IA analyse votre photo en temps réel"),
           _buildIntroFeature(
-            LucideIcons.shield,
-            "100% sécurisé et confidentiel",
-            "Vos données sont cryptées et protégées",
-          ),
+              LucideIcons.shield, "100% sécurisé et confidentiel", "Vos données sont cryptées et protégées"),
           const SizedBox(height: 24),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFF1E3A8A),
               minimumSize: const Size(double.infinity, 48),
             ),
-            onPressed: () =>
-                setState(() => currentStep = VerificationStep.document),
+            onPressed: () => setState(() => currentStep = VerificationStep.document),
             child: const Text("Commencer la vérification"),
           ),
         ],
@@ -200,10 +641,8 @@ class _VerificationPageState extends State<VerificationPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title,
-                    style: const TextStyle(fontWeight: FontWeight.w600)),
-                Text(desc,
-                    style: const TextStyle(fontSize: 13, color: Colors.grey)),
+                Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
+                Text(desc, style: const TextStyle(fontSize: 13, color: Colors.grey)),
               ],
             ),
           ),
@@ -212,6 +651,7 @@ class _VerificationPageState extends State<VerificationPage> {
     );
   }
 
+  // ------------------------ Document Step ------------------------
   Widget _buildDocumentStep() {
     return Padding(
       padding: const EdgeInsets.all(24),
@@ -238,27 +678,25 @@ class _VerificationPageState extends State<VerificationPage> {
                           CircleAvatar(
                             radius: 40,
                             backgroundColor: Colors.blue[100],
-                            child: const Icon(LucideIcons.upload,
-                                color: Colors.blue, size: 32),
+                            child: const Icon(LucideIcons.upload, color: Colors.blue, size: 32),
                           ),
                           const SizedBox(height: 16),
                           const Text("Télécharger votre document"),
                           const SizedBox(height: 8),
                           const Text("Formats acceptés : JPG, PNG, PDF",
-                              style:
-                                  TextStyle(fontSize: 12, color: Colors.grey)),
+                              style: TextStyle(fontSize: 12, color: Colors.grey)),
                           const SizedBox(height: 16),
                           ElevatedButton.icon(
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(0xFF1E3A8A),
                                 minimumSize: const Size(double.infinity, 44)),
-                            onPressed: handleDocumentUpload,
+                            onPressed: pickDocument,
                             icon: const Icon(LucideIcons.camera, size: 18),
                             label: const Text("Prendre une photo"),
                           ),
                           const SizedBox(height: 8),
                           OutlinedButton.icon(
-                            onPressed: handleDocumentUpload,
+                            onPressed: pickDocument,
                             icon: const Icon(LucideIcons.upload, size: 18),
                             label: const Text("Choisir un fichier"),
                           ),
@@ -266,13 +704,10 @@ class _VerificationPageState extends State<VerificationPage> {
                       )
                     : Column(
                         children: const [
-                          Icon(LucideIcons.checkCircle,
-                              color: Colors.green, size: 64),
+                          Icon(LucideIcons.checkCircle, color: Colors.green, size: 64),
                           SizedBox(height: 8),
                           Text("Document téléchargé !",
-                              style: TextStyle(
-                                  color: Colors.green,
-                                  fontWeight: FontWeight.w600)),
+                              style: TextStyle(color: Colors.green, fontWeight: FontWeight.w600)),
                           Text("Passage à l'étape suivante...",
                               style: TextStyle(color: Colors.grey)),
                         ],
@@ -285,6 +720,7 @@ class _VerificationPageState extends State<VerificationPage> {
     );
   }
 
+  // ------------------------ Selfie Step ------------------------
   Widget _buildSelfieStep() {
     return Padding(
       padding: const EdgeInsets.all(24),
@@ -300,8 +736,7 @@ class _VerificationPageState extends State<VerificationPage> {
           ),
           const SizedBox(height: 24),
           Card(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
             color: Colors.blue[50],
             child: Padding(
               padding: const EdgeInsets.all(24),
@@ -316,12 +751,10 @@ class _VerificationPageState extends State<VerificationPage> {
                                 width: 160,
                                 height: 160,
                                 decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: Colors.blue, width: 3, style: BorderStyle.solid),
+                                  border: Border.all(color: Colors.blue, width: 3),
                                   shape: BoxShape.circle,
                                 ),
-                                child: const Icon(LucideIcons.camera,
-                                    color: Colors.blue, size: 48),
+                                child: const Icon(LucideIcons.camera, color: Colors.blue, size: 48),
                               ),
                             ],
                           ),
@@ -330,7 +763,7 @@ class _VerificationPageState extends State<VerificationPage> {
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(0xFF1E3A8A),
                                 minimumSize: const Size(double.infinity, 44)),
-                            onPressed: handleSelfieUpload,
+                            onPressed: takeSelfie,
                             icon: const Icon(LucideIcons.camera, size: 18),
                             label: const Text("Prendre un selfie"),
                           ),
@@ -338,13 +771,10 @@ class _VerificationPageState extends State<VerificationPage> {
                       )
                     : Column(
                         children: const [
-                          Icon(LucideIcons.checkCircle,
-                              color: Colors.green, size: 64),
+                          Icon(LucideIcons.checkCircle, color: Colors.green, size: 64),
                           SizedBox(height: 8),
                           Text("Photo capturée !",
-                              style: TextStyle(
-                                  color: Colors.green,
-                                  fontWeight: FontWeight.w600)),
+                              style: TextStyle(color: Colors.green, fontWeight: FontWeight.w600)),
                           Text("Vérification en cours...",
                               style: TextStyle(color: Colors.grey)),
                         ],
@@ -357,6 +787,7 @@ class _VerificationPageState extends State<VerificationPage> {
     );
   }
 
+  // ------------------------ Processing ------------------------
   Widget _buildProcessing() {
     return Padding(
       padding: const EdgeInsets.all(24),
@@ -376,6 +807,7 @@ class _VerificationPageState extends State<VerificationPage> {
     );
   }
 
+  // ------------------------ Success ------------------------
   Widget _buildSuccess() {
     return Padding(
       padding: const EdgeInsets.all(24),
@@ -401,7 +833,7 @@ class _VerificationPageState extends State<VerificationPage> {
               backgroundColor: const Color(0xFF1E3A8A),
               minimumSize: const Size(double.infinity, 48),
             ),
-            onPressed: goToHome, // Directly navigate to Home
+            onPressed: goToHome,
             icon: const Icon(LucideIcons.shield),
             label: const Text("Continuer"),
           ),
