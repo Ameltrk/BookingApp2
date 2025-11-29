@@ -15,7 +15,7 @@ class Bottomnav extends StatefulWidget {
 class _BottomnavState extends State<Bottomnav> {
   late List<Widget> pages;
   late Home homePage;
-  late BookingPage bookingPage;
+  late BookingDashboardPage bookingPage;
   late ProfilePage profilePage;
   late Wallet wallet;
 
@@ -25,7 +25,7 @@ class _BottomnavState extends State<Bottomnav> {
   void initState() {
     super.initState();
     homePage = Home();
-    bookingPage = const BookingPage();
+    bookingPage = const BookingDashboardPage();
     profilePage = const ProfilePage();
     wallet = Wallet();
 

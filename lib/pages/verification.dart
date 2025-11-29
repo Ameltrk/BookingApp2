@@ -1,6 +1,8 @@
 
+import 'package:booking_app/pages/roles.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
+// ignore: unused_import
 import 'package:booking_app/pages/bottomnav.dart'; // Import your Home page
 
 enum VerificationStep { intro, document, selfie, processing, success }
@@ -49,13 +51,12 @@ class _VerificationPageState extends State<VerificationPage> {
     });
   }
 
-  void goToHome() {
-    // Navigate to Home page after success
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const Bottomnav()),
-    );
-  }
+ void goToHome() {
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(builder: (context) => const RoleSelectionPage()),
+  );
+}
 
   @override
   Widget build(BuildContext context) {
@@ -114,7 +115,7 @@ class _VerificationPageState extends State<VerificationPage> {
                 // Skip verification and go directly to Home
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => const Bottomnav()),
+                  MaterialPageRoute(builder: (context) => const RoleSelectionPage()),
                 );
               },
               child: const Text("Skip", style: TextStyle(color: Colors.white70)),

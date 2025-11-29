@@ -2,6 +2,7 @@
 
 // ignore: unused_import
 import 'package:booking_app/pages/bottomnav.dart';
+// ignore: unused_import
 import 'package:booking_app/pages/home.dart';
 import 'package:booking_app/pages/login.dart';
 import 'package:booking_app/pages/verification.dart';

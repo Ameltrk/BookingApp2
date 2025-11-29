@@ -1,9 +1,6 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, unused_import
 
-// ignore: unused_import
-import 'package:booking_app/pages/bottomnav.dart';
-// ignore: unused_import
-import 'package:booking_app/pages/home.dart';
+import 'package:booking_app/pages/wallet.dart';
 import 'package:booking_app/pages/signup.dart';
 import 'package:booking_app/pages/verification.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -28,7 +25,11 @@ class _LoginState extends State<Login> {
     if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
       setState(() => isLoading = true);
 
+      email = emailController.text.trim();
+      password = passwordController.text.trim();
+
       try {
+        // Firebase login
         await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: email,
           password: password,
@@ -37,18 +38,27 @@ class _LoginState extends State<Login> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             backgroundColor: Colors.green,
-            content: Text("Connexion réussie !",
-                style: TextStyle(fontSize: 16, color: Colors.white)),
+            content: Text(
+              "Connexion réussie !",
+              style: TextStyle(fontSize: 16, color: Colors.white),
+            ),
           ),
         );
 
-        Navigator.pushReplacement(
-          context,
-          // MaterialPageRoute(builder: (context) => const Bottomnav()),
-           MaterialPageRoute(builder: (context) => VerificationPage(onComplete: () {  },)),
-
-
-        );
+        // Admin check
+        if (email == "admin@gmail.com" && password == "admin123") {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const Wallet()),
+          );
+        } else {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => VerificationPage(onComplete: () {}),
+            ),
+          );
+        }
       } on FirebaseAuthException catch (e) {
         setState(() => isLoading = false);
         String message;
@@ -79,7 +89,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0D47A1), // Fond bleu
+      backgroundColor: const Color(0xFF0D47A1),
       body: isLoading
           ? const Center(child: CircularProgressIndicator(color: Colors.white))
           : SafeArea(
@@ -89,7 +99,7 @@ class _LoginState extends State<Login> {
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   child: Column(
                     children: [
-                      // 🔙 Bouton retour
+                      // Back button
                       Align(
                         alignment: Alignment.topLeft,
                         child: IconButton(
@@ -107,7 +117,7 @@ class _LoginState extends State<Login> {
 
                       const SizedBox(height: 20),
 
-                      // --- Logo & titre ---
+                      // Logo & Title
                       Column(
                         children: [
                           Container(
@@ -147,7 +157,7 @@ class _LoginState extends State<Login> {
 
                       const SizedBox(height: 50),
 
-                      // --- Formulaire de connexion ---
+                      // Login form
                       Container(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 25, vertical: 30),
@@ -173,8 +183,8 @@ class _LoginState extends State<Login> {
                               controller: emailController,
                               keyboardType: TextInputType.emailAddress,
                               decoration: InputDecoration(
-                                prefixIcon: Icon(Icons.email,
-                                    color: Colors.blue.shade700),
+                                prefixIcon:
+                                    Icon(Icons.email, color: Colors.blue.shade700),
                                 hintText: "exemple@email.com",
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(12)),
@@ -190,8 +200,8 @@ class _LoginState extends State<Login> {
                               controller: passwordController,
                               obscureText: obscurePassword,
                               decoration: InputDecoration(
-                                prefixIcon: Icon(Icons.lock,
-                                    color: Colors.blue.shade700),
+                                prefixIcon:
+                                    Icon(Icons.lock, color: Colors.blue.shade700),
                                 suffixIcon: IconButton(
                                   icon: Icon(
                                       obscurePassword
@@ -224,15 +234,9 @@ class _LoginState extends State<Login> {
 
                             const SizedBox(height: 20),
 
-                            // 🔵 Bouton Se connecter
+                            // Login button
                             GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  email = emailController.text.trim();
-                                  password = passwordController.text.trim();
-                                });
-                                userLogin();
-                              },
+                              onTap: userLogin,
                               child: Container(
                                 height: 55,
                                 decoration: BoxDecoration(

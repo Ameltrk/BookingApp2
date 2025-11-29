@@ -1,6 +1,7 @@
 
 import 'dart:io';
 import 'package:booking_app/bookingowner/ouner_home.dart';
+import 'package:booking_app/pages/home.dart';
 import 'package:booking_app/services/database.dart';
 import 'package:booking_app/services/widget_support.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -109,7 +110,7 @@ class _PlaceDetailState extends State<PlaceDetail> {
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const OunerHome()),
+        MaterialPageRoute(builder: (context) => const Home()),
       );
     } catch (e) {
       Navigator.pop(context);

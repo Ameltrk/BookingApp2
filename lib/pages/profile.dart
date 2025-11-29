@@ -284,7 +284,7 @@ class _ProfilePageState extends State<ProfilePage> {
             } else if (title == 'Mes réservations') {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const BookingPage()),
+                MaterialPageRoute(builder: (context) => const BookingDashboardPage()),
               );
             }
             // Vous pouvez ajouter d'autres navigations ici (ex: 'Favoris')
@@ -356,6 +356,7 @@ class _ProfilePageState extends State<ProfilePage> {
         onPressed: () async {
           await FirebaseAuth.instance.signOut();
           ScaffoldMessenger.of(
+            // ignore: use_build_context_synchronously
             context,
           ).showSnackBar(const SnackBar(content: Text('Déconnexion réussie.')));
           // Vous devriez ajouter ici une navigation vers la page de connexion
