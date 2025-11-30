@@ -19,6 +19,8 @@ class _DetailPageState extends State<DetailPage> {
   int guests = 1;
   String paymentMethod = "";
 
+  static const Color primaryColor = Color(0xFF1E3C72);
+
   Future<void> pickCheckInDate() async {
     DateTime now = DateTime.now();
     final DateTime? picked = await showDatePicker(
@@ -58,6 +60,23 @@ class _DetailPageState extends State<DetailPage> {
     }
   }
 
+  String formatDate(DateTime date) {
+    return "${date.day.toString().padLeft(2,'0')}/${date.month.toString().padLeft(2,'0')}/${date.year}";
+  }
+
+  Widget buildServiceRow(IconData icon, String label) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5.0),
+      child: Row(
+        children: [
+          Icon(icon, color: primaryColor, size: 28),
+          const SizedBox(width: 10),
+          Text(label, style: AppWidget.normaltextstyle(18.0)),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final data = widget.placeData;
@@ -72,7 +91,7 @@ class _DetailPageState extends State<DetailPage> {
               children: [
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height / 2.5,
+                  height: MediaQuery.of(context).size.height / 2.2,
                   child: ClipRRect(
                     borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(50),
@@ -83,21 +102,24 @@ class _DetailPageState extends State<DetailPage> {
                         : Image.asset("images/hotel1.jpg", fit: BoxFit.cover),
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(5),
-                    margin: const EdgeInsets.only(top: 50.0, left: 20.0),
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(60),
-                    ),
-                    child: const Icon(
-                      Icons.arrow_back,
-                      color: Colors.white,
-                      size: 30.0,
+                Positioned(
+                  top: 50,
+                  left: 20,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.6),
+                        borderRadius: BorderRadius.circular(60),
+                      ),
+                      child: const Icon(
+                        Icons.arrow_back,
+                        color: Colors.white,
+                        size: 30.0,
+                      ),
                     ),
                   ),
                 ),
@@ -110,42 +132,45 @@ class _DetailPageState extends State<DetailPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 20.0),
+
                   // PLACE NAME
-                  Text(data["PlaceName"] ?? "", style: AppWidget.headlinetextstyle(22.0)),
+                  Text(data["PlaceName"] ?? "", style: AppWidget.headlinetextstyle(24.0)),
                   const SizedBox(height: 5.0),
+
                   // PRICE
-                  Text("\$${data["PlaceCharges"] ?? "N/A"}", style: AppWidget.normaltextstyle(27.0)),
+                  Text("${data["PlaceCharges"] ?? "N/A"} DA / nuit",
+                      style: AppWidget.normaltextstyle(26.0).copyWith(color: primaryColor, fontWeight: FontWeight.bold)),
 
                   const Divider(thickness: 2.0),
                   const SizedBox(height: 15.0),
 
                   // PLACE DESCRIPTION
-                  Text("About this place", style: AppWidget.headlinetextstyle(22.0)),
+                  Text("À propos de ce séjour", style: AppWidget.headlinetextstyle(22.0)),
                   const SizedBox(height: 5.0),
-                  Text(data["PlaceDescription"] ?? "No description available",
+                  Text(data["PlaceDescription"] ?? "Pas de description disponible",
                       style: AppWidget.normaltextstyle(16.0)),
 
                   const SizedBox(height: 20.0),
 
                   // SERVICES OFFERED
-                  Text("What this place offers?", style: AppWidget.headlinetextstyle(22.0)),
+                  Text("Services proposés", style: AppWidget.headlinetextstyle(22.0)),
                   const SizedBox(height: 5.0),
                   if (data["WiFi"] == true) buildServiceRow(Icons.wifi, "WiFi"),
                   if (data["HDTV"] == true) buildServiceRow(Icons.tv, "HDTV"),
-                  if (data["Kitchen"] == true) buildServiceRow(Icons.kitchen, "Kitchen"),
-                  if (data["Bathroom"] == true) buildServiceRow(Icons.bathroom, "Bathroom"),
+                  if (data["Kitchen"] == true) buildServiceRow(Icons.kitchen, "Cuisine"),
+                  if (data["Bathroom"] == true) buildServiceRow(Icons.bathroom, "Salle de bain"),
 
                   const Divider(thickness: 2.0),
                   const SizedBox(height: 15.0),
 
                   // NUMBER OF GUESTS
-                  Text("Number of Guests", style: AppWidget.normaltextstyle(20.0)),
+                  Text("Nombre de voyageurs", style: AppWidget.normaltextstyle(20.0)),
                   const SizedBox(height: 5.0),
                   Container(
                     padding: const EdgeInsets.only(left: 20.0),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFececf8),
-                      borderRadius: BorderRadius.circular(10),
+                      color: primaryColor.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(12),
                     ),
                     child: TextField(
                       keyboardType: TextInputType.number,
@@ -157,10 +182,7 @@ class _DetailPageState extends State<DetailPage> {
                       decoration: const InputDecoration(
                         border: InputBorder.none,
                         hintText: "1",
-                        hintStyle: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500),
+                        hintStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                       ),
                     ),
                   ),
@@ -171,18 +193,28 @@ class _DetailPageState extends State<DetailPage> {
                   Row(
                     children: [
                       Expanded(
-                        child: ElevatedButton(
+                        child: ElevatedButton.icon(
                           onPressed: pickCheckInDate,
-                          child: Text(
-                              "Check-in: ${checkInDate != null ? formatDate(checkInDate!) : "Select"}"),
+                          icon: const Icon(Icons.calendar_today_outlined),
+                          label: Text(checkInDate != null ? formatDate(checkInDate!) : "Check-in"),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: primaryColor,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                            padding: const EdgeInsets.symmetric(vertical: 15),
+                          ),
                         ),
                       ),
                       const SizedBox(width: 10),
                       Expanded(
-                        child: ElevatedButton(
+                        child: ElevatedButton.icon(
                           onPressed: pickCheckOutDate,
-                          child: Text(
-                              "Check-out: ${checkOutDate != null ? formatDate(checkOutDate!) : "Select"}"),
+                          icon: const Icon(Icons.calendar_today_outlined),
+                          label: Text(checkOutDate != null ? formatDate(checkOutDate!) : "Check-out"),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: primaryColor,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                            padding: const EdgeInsets.symmetric(vertical: 15),
+                          ),
                         ),
                       ),
                     ],
@@ -191,7 +223,7 @@ class _DetailPageState extends State<DetailPage> {
                   const SizedBox(height: 15.0),
 
                   // PAYMENT METHOD
-                  ElevatedButton(
+                  ElevatedButton.icon(
                     onPressed: () async {
                       final result = await Navigator.push(
                         context,
@@ -203,30 +235,32 @@ class _DetailPageState extends State<DetailPage> {
                         });
                       }
                     },
-                    child: Text(paymentMethod.isEmpty
-                        ? "Select Payment Method"
-                        : "Payment: $paymentMethod"),
+                    icon: const Icon(Icons.payment),
+                    label: Text(paymentMethod.isEmpty ? "Choisir le mode de paiement" : "Paiement: $paymentMethod"),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: primaryColor,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      padding: const EdgeInsets.symmetric(vertical: 15),
+                    ),
                   ),
 
                   const SizedBox(height: 20.0),
 
                   // BOOK NOW BUTTON
-                  Container(
-                    height: 50,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                        color: Colors.blue, borderRadius: BorderRadius.circular(10)),
-                    child: InkWell(
-                      onTap: () {
+                  SizedBox(
+                    width: double.infinity,
+                    height: 55,
+                    child: ElevatedButton(
+                      onPressed: () {
                         if (checkInDate == null || checkOutDate == null) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text("Please select both dates.")),
+                            const SnackBar(content: Text("Veuillez sélectionner les deux dates.")),
                           );
                           return;
                         }
                         if (paymentMethod.isEmpty) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text("Please select a payment method.")),
+                            const SnackBar(content: Text("Veuillez sélectionner un mode de paiement.")),
                           );
                           return;
                         }
@@ -247,14 +281,14 @@ class _DetailPageState extends State<DetailPage> {
                         });
 
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text("Booking added!")),
+                          const SnackBar(content: Text("Réservation ajoutée !")),
                         );
                       },
-                      child: Center(
-                          child: Text(
-                        "Book Now",
-                        style: AppWidget.whitetextstyle(22.0),
-                      )),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: primaryColor,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      ),
+                      child: Text("Réserver maintenant", style: AppWidget.whitetextstyle(20.0)),
                     ),
                   ),
 
@@ -266,22 +300,5 @@ class _DetailPageState extends State<DetailPage> {
         ),
       ),
     );
-  }
-
-  Widget buildServiceRow(IconData icon, String label) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5.0),
-      child: Row(
-        children: [
-          Icon(icon, color: const Color(0xFF3A88C8), size: 30),
-          const SizedBox(width: 10),
-          Text(label, style: AppWidget.normaltextstyle(18.0)),
-        ],
-      ),
-    );
-  }
-
-  String formatDate(DateTime date) {
-    return "${date.day.toString().padLeft(2,'0')}, ${date.month}, ${date.year}";
   }
 }

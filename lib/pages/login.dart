@@ -114,9 +114,9 @@ class _LoginState extends State<Login> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => VerificationPage(onComplete: () {}),
-          ),
-        );
+            builder: (context) => VerificationPage()),
+          );
+        
       }
     } on FirebaseAuthException catch (e) {
       String message;

@@ -412,19 +412,19 @@
 // }
 
 
-
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 
-import 'roles.dart'; // Your page to navigate after verification
+import 'roles.dart'; // RoleSelectionPage
+import 'login.dart'; // LoginPage
 
 enum VerificationStep { intro, document, selfie, processing, success }
 
 class VerificationPage extends StatefulWidget {
-  const VerificationPage({super.key, required Null Function() onComplete});
+  const VerificationPage({super.key});
 
   @override
   State<VerificationPage> createState() => _VerificationPageState();
@@ -486,7 +486,7 @@ class _VerificationPageState extends State<VerificationPage> {
 
     var request = http.MultipartRequest(
       'POST',
-      Uri.parse('http://10.0.2.2:5000/verify')
+      Uri.parse('http://10.0.2.2:5000/verify'),
     );
 
     request.files.add(await http.MultipartFile.fromPath('document', documentPath!));
@@ -504,10 +504,17 @@ class _VerificationPageState extends State<VerificationPage> {
     }
   }
 
-  void goToHome() {
+  void goToRoleSelection() {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => const RoleSelectionPage()),
+    );
+  }
+
+  void goToLogin() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const Login()),
     );
   }
 
@@ -563,10 +570,13 @@ class _VerificationPageState extends State<VerificationPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text("Vérification",
-                  style: TextStyle(color: Colors.white, fontSize: 18)),
+              // <-- FLECHE DE RETOUR VERS LOGIN
+              IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.white),
+                onPressed: goToLogin,
+              ),
               TextButton(
-                onPressed: goToHome,
+                onPressed: goToRoleSelection,
                 child: const Text("Skip", style: TextStyle(color: Colors.white70)),
               ),
             ],
@@ -833,7 +843,7 @@ class _VerificationPageState extends State<VerificationPage> {
               backgroundColor: const Color(0xFF1E3A8A),
               minimumSize: const Size(double.infinity, 48),
             ),
-            onPressed: goToHome,
+            onPressed: goToRoleSelection,
             icon: const Icon(LucideIcons.shield),
             label: const Text("Continuer"),
           ),

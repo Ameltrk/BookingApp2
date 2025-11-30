@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:booking_app/pages/bottomnav.dart';
 import 'package:booking_app/bookingowner/place_detail.dart';
+import 'verification.dart'; // <-- Import de la page VerificationPage
 
 class RoleSelectionPage extends StatelessWidget {
   const RoleSelectionPage({super.key});
@@ -13,6 +14,16 @@ class RoleSelectionPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Choose Your Role"),
         backgroundColor: const Color(0xFF1E3A8A),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            // <-- Retour vers la page verification
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => const VerificationPage()),
+            );
+          },
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(28),
@@ -36,13 +47,13 @@ class RoleSelectionPage extends StatelessWidget {
             Center(
               child: GestureDetector(
                 onTap: () {
-                  Navigator.pushReplacement(
+                  Navigator.push(
                     context,
                     MaterialPageRoute(builder: (_) => const Bottomnav()),
                   );
                 },
                 child: Container(
-                  width: 260, // centered box width
+                  width: 260,
                   padding: const EdgeInsets.all(24),
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -72,13 +83,13 @@ class RoleSelectionPage extends StatelessWidget {
             Center(
               child: GestureDetector(
                 onTap: () {
-                  Navigator.pushReplacement(
+                  Navigator.push(
                     context,
                     MaterialPageRoute(builder: (_) => const PlaceDetail()),
                   );
                 },
                 child: Container(
-                  width: 260, // same width to stay centered & symmetric
+                  width: 260,
                   padding: const EdgeInsets.all(24),
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -107,3 +118,4 @@ class RoleSelectionPage extends StatelessWidget {
     );
   }
 }
+

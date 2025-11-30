@@ -1,4 +1,3 @@
-
 import 'package:booking_app/pages/detail_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +12,6 @@ class Home extends StatefulWidget {
 class _HomePageState extends State<Home> {
   String? selectedCategory;
 
-  // 🔍 Search Fields
   String searchQuery = "";
   DateTime? arrivalDate;
   DateTime? departureDate;
@@ -36,15 +34,43 @@ class _HomePageState extends State<Home> {
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "Trouvez votre séjour idéal",
-                style: TextStyle(fontSize: 18, color: Colors.black54),
+              // -------------------- TITRE CENTRAL AVEC ICONE --------------------
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 8,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Text(
+                      "Trouvez votre séjour idéal ",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF1E3C72),
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    Text(
+                      "🏖️", // <-- Emoji
+                      style: TextStyle(fontSize: 24),
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 20),
 
-              // 🔵 🔵 🔵 FULL SEARCH UI (React-style)
+              // -------------------- SEARCH UI --------------------
               Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -61,11 +87,12 @@ class _HomePageState extends State<Home> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // 🔍 Destination Input
+                    // Destination Input
                     TextField(
                       decoration: InputDecoration(
                         hintText: "Où souhaitez-vous aller ?",
-                        prefixIcon: const Icon(Icons.location_on_outlined, color: Colors.grey),
+                        prefixIcon:
+                            const Icon(Icons.location_on_outlined, color: Colors.grey),
                         filled: true,
                         fillColor: Colors.grey[50],
                         border: OutlineInputBorder(
@@ -80,7 +107,7 @@ class _HomePageState extends State<Home> {
 
                     const SizedBox(height: 12),
 
-                    // 🗓️ Date Pickers Row
+                    // Date Pickers
                     Row(
                       children: [
                         Expanded(
@@ -91,9 +118,7 @@ class _HomePageState extends State<Home> {
                                 firstDate: DateTime.now(),
                                 lastDate: DateTime(2100),
                               );
-                              if (date != null) {
-                                setState(() => arrivalDate = date);
-                              }
+                              if (date != null) setState(() => arrivalDate = date);
                             },
                             child: Container(
                               padding: const EdgeInsets.symmetric(
@@ -127,9 +152,7 @@ class _HomePageState extends State<Home> {
                                 firstDate: DateTime.now(),
                                 lastDate: DateTime(2100),
                               );
-                              if (date != null) {
-                                setState(() => departureDate = date);
-                              }
+                              if (date != null) setState(() => departureDate = date);
                             },
                             child: Container(
                               padding: const EdgeInsets.symmetric(
@@ -159,7 +182,7 @@ class _HomePageState extends State<Home> {
 
                     const SizedBox(height: 16),
 
-                    // 🔎 Search Button
+                    // Search Button
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton.icon(
@@ -171,7 +194,8 @@ class _HomePageState extends State<Home> {
                           ),
                         ),
                         icon: const Icon(Icons.search, size: 20),
-                        label: const Text("Rechercher", style: TextStyle(fontSize: 16)),
+                        label:
+                            const Text("Rechercher", style: TextStyle(fontSize: 16)),
                         onPressed: () {
                           setState(() {});
                         },
@@ -183,10 +207,13 @@ class _HomePageState extends State<Home> {
 
               const SizedBox(height: 25),
 
-              // 🔥 Categories
-              const Text(
-                "Catégories",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              // -------------------- Categories --------------------
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Catégories",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
               ),
               const SizedBox(height: 12),
 
@@ -209,24 +236,19 @@ class _HomePageState extends State<Home> {
                             horizontal: 16, vertical: 10),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30),
-                          color: isSelected
-                              ? const Color(0xFF1E3C72)
-                              : Colors.white,
+                          color: isSelected ? const Color(0xFF1E3C72) : Colors.white,
                           border: Border.all(color: Colors.grey.shade300),
                         ),
                         child: Row(
                           children: [
                             Icon(category["icon"],
                                 size: 16,
-                                color:
-                                    isSelected ? Colors.white : Colors.black87),
+                                color: isSelected ? Colors.white : Colors.black87),
                             const SizedBox(width: 6),
                             Text(
                               category["label"],
                               style: TextStyle(
-                                color:
-                                    isSelected ? Colors.white : Colors.black87,
-                              ),
+                                  color: isSelected ? Colors.white : Colors.black87),
                             ),
                           ],
                         ),
@@ -238,14 +260,16 @@ class _HomePageState extends State<Home> {
 
               const SizedBox(height: 30),
 
-              // 🔥 Title
-              const Text(
-                "Recommandations",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Recommandations",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
               ),
               const SizedBox(height: 10),
 
-              // 🔹 StreamBuilder for Firebase properties
+              // StreamBuilder pour Firebase
               StreamBuilder<QuerySnapshot>(
                 stream: FirebaseFirestore.instance
                     .collection("Place")
@@ -257,223 +281,99 @@ class _HomePageState extends State<Home> {
                   }
 
                   final docs = snapshot.data!.docs;
-
                   if (docs.isEmpty) {
                     return const Center(child: Text("Aucune propriété disponible."));
                   }
 
-                  // return Column(
-                  //   children: docs.map((doc) {
-                  //     final data = doc.data() as Map<String, dynamic>;
-                  //     return Card(
-                  //       margin: const EdgeInsets.only(bottom: 16),
-                  //       clipBehavior: Clip.hardEdge,
-                  //       shape: RoundedRectangleBorder(
-                  //         borderRadius: BorderRadius.circular(16),
-                  //       ),
-                  //       child: Column(
-                  //         crossAxisAlignment: CrossAxisAlignment.start,
-                  //         children: [
-                  //           data["Image"] != null &&
-                  //                   data["Image"] != ""
-                  //               ? Image.network(
-                  //                   data["Image"],
-                  //                   height: 180,
-                  //                   width: double.infinity,
-                  //                   fit: BoxFit.cover,
-                  //                 )
-                  //               : Container(
-                  //                   height: 180,
-                  //                   color: Colors.grey[300],
-                  //                   child: const Center(
-                  //                       child: Icon(Icons.image, size: 50)),
-                  //                 ),
-                  //           Padding(
-                  //             padding: const EdgeInsets.all(12),
-                  //             child: Column(
-                  //               crossAxisAlignment: CrossAxisAlignment.start,
-                  //               children: [
-                  //                 Text(data["PlaceName"] ?? "",
-                  //                     style: const TextStyle(
-                  //                         fontWeight: FontWeight.bold,
-                  //                         fontSize: 16)),
-                  //                 const SizedBox(height: 5),
-                  //                 Row(
-                  //                   children: [
-                  //                     const Icon(Icons.location_on_outlined,
-                  //                         size: 16, color: Colors.grey),
-                  //                     const SizedBox(width: 4),
-                  //                     Text(data["PlaceAddress"] ?? "",
-                  //                         style: const TextStyle(
-                  //                             color: Colors.grey,
-                  //                             fontSize: 13)),
-                  //                   ],
-                  //                 ),
-                  //                 const SizedBox(height: 8),
-                  //                 Text(
-                  //                   "${data["PlaceCharges"] ?? "-"} DA / nuit",
-                  //                   style: const TextStyle(
-                  //                       color: Color(0xFF1E3C72),
-                  //                       fontWeight: FontWeight.bold),
-                  //                 ),
-                  //               ],
-                  //             ),
-                  //           )
-                  //         ],
-                  //       ),
-                  //     );
-                  //   }).toList(),
-                  // );
-//  return SizedBox(
-//   height: 260, // enough to show card + padding
-//   child: ListView(
-//     scrollDirection: Axis.horizontal,
-//     children: docs.map((doc) {
-//       final data = doc.data() as Map<String, dynamic>;
-//       return Container(
-//         width: 200, // card width
-//         margin: const EdgeInsets.only(right: 16),
-//         child: Card(
-//           clipBehavior: Clip.hardEdge,
-//           shape: RoundedRectangleBorder(
-//             borderRadius: BorderRadius.circular(16),
-//           ),
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               data["Image"] != null && data["Image"] != ""
-//                   ? Image.network(
-//                       data["Image"],
-//                       height: 120,
-//                       width: double.infinity,
-//                       fit: BoxFit.cover,
-//                     )
-//                   : Container(
-//                       height: 120,
-//                       color: Colors.grey[300],
-//                       child: const Center(
-//                           child: Icon(Icons.image, size: 50)),
-//                     ),
-//               Padding(
-//                 padding: const EdgeInsets.all(8),
-//                 child: Column(
-//                   crossAxisAlignment: CrossAxisAlignment.start,
-//                   children: [
-//                     Text(data["PlaceName"] ?? "",
-//                         style: const TextStyle(
-//                             fontWeight: FontWeight.bold, fontSize: 14)),
-//                     const SizedBox(height: 4),
-//                     Row(
-//                       children: [
-//                         const Icon(Icons.location_on_outlined,
-//                             size: 14, color: Colors.grey),
-//                         const SizedBox(width: 4),
-//                         Expanded(
-//                           child: Text(data["PlaceAddress"] ?? "",
-//                               style: const TextStyle(
-//                                   color: Colors.grey, fontSize: 12),
-//                               overflow: TextOverflow.ellipsis),
-//                         ),
-//                       ],
-//                     ),
-//                     const SizedBox(height: 6),
-//                     Text(
-//                       "${data["PlaceCharges"] ?? "-"} DA / nuit",
-//                       style: const TextStyle(
-//                           color: Color(0xFF1E3C72),
-//                           fontWeight: FontWeight.bold),
-//                     ),
-//                   ],
-//                 ),
-//               )
-//             ],
-//           ),
-//         ),
-//       );
-//     }).toList(),
-//   ),
-// );
-return SizedBox(
-  height: 260,
-  child: ListView(
-    scrollDirection: Axis.horizontal,
-    children: docs.map((doc) {
-      final data = doc.data() as Map<String, dynamic>;
-      return GestureDetector(
-        onTap: () {
-          // Navigate to DetailPage with the selected place data
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => DetailPage(placeData: data),
-            ),
-          );
-        },
-        child: Container(
-          width: 200,
-          margin: const EdgeInsets.only(right: 16),
-          child: Card(
-            clipBehavior: Clip.hardEdge,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                data["Image"] != null && data["Image"] != ""
-                    ? Image.network(
-                        data["Image"],
-                        height: 120,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                      )
-                    : Container(
-                        height: 120,
-                        color: Colors.grey[300],
-                        child: const Center(
-                            child: Icon(Icons.image, size: 50)),
-                      ),
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(data["PlaceName"] ?? "",
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 14)),
-                      const SizedBox(height: 4),
-                      Row(
-                        children: [
-                          const Icon(Icons.location_on_outlined,
-                              size: 14, color: Colors.grey),
-                          const SizedBox(width: 4),
-                          Expanded(
-                            child: Text(data["PlaceAddress"] ?? "",
-                                style: const TextStyle(
-                                    color: Colors.grey, fontSize: 12),
-                                overflow: TextOverflow.ellipsis),
+                  return SizedBox(
+                    height: 320,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: docs.map((doc) {
+                        final data = doc.data() as Map<String, dynamic>;
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    DetailPage(placeData: data),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.8,
+                            margin: const EdgeInsets.only(right: 16),
+                            child: Card(
+                              elevation: 4,
+                              clipBehavior: Clip.hardEdge,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  data["Image"] != null && data["Image"] != ""
+                                      ? Image.network(
+                                          data["Image"],
+                                          height: 180,
+                                          width: double.infinity,
+                                          fit: BoxFit.cover,
+                                        )
+                                      : Container(
+                                          height: 180,
+                                          color: Colors.grey[300],
+                                          child: const Center(
+                                              child: Icon(Icons.image, size: 50)),
+                                        ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(12),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          data["PlaceName"] ?? "",
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18),
+                                        ),
+                                        const SizedBox(height: 6),
+                                        Row(
+                                          children: [
+                                            const Icon(Icons.location_on_outlined,
+                                                size: 16, color: Colors.grey),
+                                            const SizedBox(width: 4),
+                                            Expanded(
+                                              child: Text(
+                                                data["PlaceAddress"] ?? "",
+                                                style: const TextStyle(
+                                                    color: Colors.grey,
+                                                    fontSize: 14),
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Text(
+                                          "${data["PlaceCharges"] ?? "-"} DA / nuit",
+                                          style: const TextStyle(
+                                              color: Color(0xFF1E3C72),
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
                           ),
-                        ],
-                      ),
-                      const SizedBox(height: 6),
-                      Text(
-                        "${data["PlaceCharges"] ?? "-"} DA / nuit",
-                        style: const TextStyle(
-                            color: Color(0xFF1E3C72),
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-      );
-    }).toList(),
-  ),
-);
-
+                        );
+                      }).toList(),
+                    ),
+                  );
                 },
               ),
             ],

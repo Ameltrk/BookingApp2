@@ -5,11 +5,15 @@
 import 'package:booking_app/bookingowner/place_detail.dart';
 import 'package:booking_app/pages/booking.dart';
 import 'package:booking_app/pages/bottomnav.dart';
+import 'package:booking_app/pages/concierge.dart';
 import 'package:booking_app/pages/detail_page.dart';
+import 'package:booking_app/pages/discover.dart';
 import 'package:booking_app/pages/login.dart';
 import 'package:booking_app/pages/profile.dart';
+import 'package:booking_app/pages/reservation_page.dart';
 import 'package:booking_app/pages/roles.dart';
 import 'package:booking_app/pages/signup.dart';
+import 'package:booking_app/pages/transport.dart';
 import 'package:booking_app/pages/verification.dart';
 import 'package:booking_app/pages/landing_page.dart';
 import 'package:booking_app/pages/home.dart';
@@ -93,15 +97,29 @@ class MyApp extends StatelessWidget {
 
 
       // home: const Bottomnav(),
-      // home: const Home(),
+      //home: const Home(),
       //home: const BookingPage(),
-      home: VerificationPage(onComplete: () {  },)
-      // home:  LandingPage(),
-      // home: Wallet()
+      //home: VerificationPage(onComplete: () {  },)
+       home:  LandingPage(),
+       //home: Wallet(),
+     // home: TransportPage(),
+       //home: ConciergePage(),
+      // home: DiscoverPage()
       // home: RoleSelectionPage()
       //  home: const DetailPage(), hadi li fiha detail t3 chaque house
-      // home: const PlaceDetail()// hadi bsh yajouti owner placa
+     // home: const PlaceDetail()// hadi bsh yajouti owner placa
       // home: const ProfilePage(),
+   /* home: ReservationPage(
+  item: {
+    'id': '1',
+    'name': 'Maison de rêve',
+    'price': '4500 DA',
+    'image': 'assets/sample_house.jpg', // ou une URL
+  },
+  type: 'house', // ou 'vehicle' selon le type
+),*/
+
+
     );
   }
 }
